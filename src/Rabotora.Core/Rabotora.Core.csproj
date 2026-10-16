@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <LangVersion>latest</LangVersion>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <AssemblyTitle>Rabotora Engine Core Library</AssemblyTitle>
+        <Version>0.1.0</Version>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <!--
+          The three WGPU packages must always carry the same version: Silk.NET.WebGPU holds the managed
+          bindings, and Silk.NET.WebGPU.Native.WGPU the wgpu_native binary they P/Invoke into. Mixing
+          versions (for example only downgrading the native package) compiles fine and then crashes with
+          an access violation, because the struct layouts the managed side marshals no longer match.
+          See Silk.NET issue #2183 and the 2.22.0 release note "Fixed WGPU binaries being out of sync
+          with the bindings API surface and crashing as a result".
+      -->
+      <PackageReference Include="Silk.NET.WebGPU" Version="2.23.0" />
+      <PackageReference Include="Silk.NET.WebGPU.Extensions.WGPU" Version="2.23.0" />
+      <PackageReference Include="Silk.NET.WebGPU.Native.WGPU" Version="2.23.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="BuiltInResources\Shaders\triangle.wgsl" />
+      <EmbeddedResource Include="BuiltInResources\Shaders\triangle.wgsl" />
+    </ItemGroup>
+
+</Project>
